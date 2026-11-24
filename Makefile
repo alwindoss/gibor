@@ -14,12 +14,8 @@ dev:
 
 build: clean
 	@echo "\nBuilding $(APP_NAME)"
-	$(BUILD_ENVS) $(BUILD_CMD) $(BUILD_FLAGS) $(BIN_DIR)/$(APP_NAME) $(SRC_DIR)
-
-run: build
-	@echo "\nRunning ./$(BIN_DIR)/$(APP_NAME)"
-	./$(BIN_DIR)/$(APP_NAME)
+	go tool task build
 
 clean:
 	@echo "\nDeleting $(BIN_DIR)"
-	rm -rf $(BIN_DIR)
+	go tool task clean

@@ -2,6 +2,9 @@
 
 version: '3'
 
+vars:
+  APP_NAME: gibor
+
 tasks:
   dev:
     desc: Run the Go backend (via Air) and UI dev server in parallel
@@ -18,3 +21,35 @@ tasks:
     desc: Run the frontend development server
     cmds:
       - npm --prefix ui run dev
+
+  build:
+    desc: Run the build for frontend and then the backend
+    cmds:
+      - task: build:frontend
+      - task: build:backend
+  build:backend:
+    desc: Run the build for the backend
+    cmds:
+      - go build -o ./bin/gibor ./cmd/{{.APP_NAME}}
+  build:frontend:
+    desc: Run the build for the frontend
+    cmds:
+      - npm --prefix ui install
+      - npm --prefix ui run build
+
+  
+  clean:
+    desc: Run the clean for frontend and then the backend
+    cmds:
+      - task: clean:frontend
+      - task: clean:backend
+  clean:backend:
+    desc: Run the clean for the backend
+    cmds:
+      - rm -rf bin
+  clean:frontend:
+    desc: Run the clean for the frontend
+    cmds:
+      - rm -rf bin
+
+  
