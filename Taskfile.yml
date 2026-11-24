@@ -50,6 +50,6 @@ tasks:
   clean:frontend:
     desc: Run the clean for the frontend
     cmds:
-      - rm -rf bin
+      - rm -rf ui/dist
 
   
