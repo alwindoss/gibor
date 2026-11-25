@@ -19,3 +19,12 @@ build: clean
 clean:
 	@echo "\nDeleting $(BIN_DIR)"
 	go tool task clean
+
+docker:
+	@echo "\nBuilding Docker image"
+	go tool task build:docker
+
+docker-publish:
+	@echo "\nBuilding Docker image"
+	go tool task publish:docker
+

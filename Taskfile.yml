@@ -4,6 +4,8 @@ version: '3'
 
 vars:
   APP_NAME: gibor
+  DOCKER_REPOSITORY_OWNER: alwindoss
+  VERSION: 0.0.1
 
 tasks:
   dev:
@@ -30,13 +32,22 @@ tasks:
   build:backend:
     desc: Run the build for the backend
     cmds:
-      - go build -o ./bin/gibor ./cmd/{{.APP_NAME}}
+      - CGO_ENABLED=0 go build -o ./bin/gibor ./cmd/{{.APP_NAME}}
   build:frontend:
     desc: Run the build for the frontend
     cmds:
       - npm --prefix ui install
       - npm --prefix ui run build
 
+  build:docker:
+    desc: Create a docker build
+    cmds:
+      - docker build -t {{.DOCKER_REPOSITORY_OWNER}}/{{.APP_NAME}}:{{.VERSION}} .
+
+  publish:docker:
+    desc: Publish the current version to docker registry
+    cmds:
+      - docker push {{.DOCKER_REPOSITORY_OWNER}}/{{.APP_NAME}}:{{.VERSION}}
   
   clean:
     desc: Run the clean for frontend and then the backend
@@ -51,5 +62,7 @@ tasks:
     desc: Run the clean for the frontend
     cmds:
       - rm -rf ui/dist
+
+  
 
   
